@@ -1,0 +1,2 @@
+2023-08-13 23:29:32.346 [http-nio-8001-exec-7] ERROR
+                c.G.s.exceptionHandler.GlobalExceptionHandler - / by zero
