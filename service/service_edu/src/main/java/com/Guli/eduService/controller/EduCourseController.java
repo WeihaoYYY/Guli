@@ -26,8 +26,8 @@ public class EduCourseController {
     //添加课程基本信息
     @PostMapping("addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoVo courseInfoVo) {  //RequestBody将表单数据封装到courseInfoVo对象中
-        courseService.saveCourseInfo(courseInfoVo);
-        return R.ok();
+        String id = courseService.saveCourseInfo(courseInfoVo);
+        return R.ok().data("courseId", id);
     }
 
 }

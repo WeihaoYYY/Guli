@@ -40,7 +40,7 @@ public class EduTeacherController {
     @GetMapping("findAll")
     public R findAllTeacher(){
         //int a = 10 / 0;  //测试全局异常处理
-        return R.ok().data("items", teacherService.list(null));
+        return R.ok().data("items", teacherService.list(null));  //null表示查询所有
     }
 
     @ApiOperation(value = "根据ID删除讲师")
