@@ -6,3 +6,27 @@
 ### SQL: INSERT INTO edu_course_description  ( id, description, gmt_create, gmt_modified )  VALUES  ( ?, ?, ?, ? )
 ### Cause: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'description' at row 1
 ; Data truncation: Data too long for column 'description' at row 1; nested exception is com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'description' at row 1
+2023-10-09 15:06:03.439 [http-nio-8001-exec-4] ERROR
+                c.G.s.exceptionHandler.GlobalExceptionHandler - 
+### Error updating database.  Cause: java.sql.SQLException: Field 'gmt_create' doesn't have a default value
+### The error may involve com.Guli.eduService.mapper.EduChapterMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO edu_chapter  ( id, course_id, title, sort )  VALUES  ( ?, ?, ?, ? )
+### Cause: java.sql.SQLException: Field 'gmt_create' doesn't have a default value
+; Field 'gmt_create' doesn't have a default value; nested exception is java.sql.SQLException: Field 'gmt_create' doesn't have a default value
+2023-10-09 15:22:56.807 [http-nio-8001-exec-2] ERROR
+                c.G.s.exceptionHandler.GlobalExceptionHandler - 
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'
+### The error may involve com.Guli.eduService.mapper.EduChapterMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO edu_chapter  ( id, course_id, title, sort, gmt_create, gmt_modified )  VALUES  ( ?, ?, ?, ?, ?, ? )
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'
+; Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'
+2023-10-09 15:24:20.147 [http-nio-8001-exec-3] ERROR
+                c.G.s.exceptionHandler.GlobalExceptionHandler - 
+### Error updating database.  Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'
+### The error may involve com.Guli.eduService.mapper.EduChapterMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO edu_chapter  ( id, course_id, title, sort, gmt_create, gmt_modified )  VALUES  ( ?, ?, ?, ?, ?, ? )
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'
+; Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1711232770989473793' for key 'edu_chapter.PRIMARY'

@@ -1,6 +1,7 @@
 package com.Guli.eduService.controller;
 
 
+import com.Guli.eduService.entity.EduChapter;
 import com.Guli.eduService.entity.chapter.ChapterVo;
 import com.Guli.eduService.service.EduChapterService;
 import commonUtils.R;
@@ -35,6 +36,39 @@ public class EduChapterController {
         List<ChapterVo> list = chapterService.getChapterVideoByCourseId(courseId);
         return R.ok().data("allChapterVideo", list);
     }
+
+    @ApiOperation(value = "添加章节")
+    @PostMapping("addChapter")
+    public R addChapter(@RequestBody EduChapter eduChapter){
+        chapterService.save(eduChapter);
+        return R.ok();
+    }
+
+    @ApiOperation(value = "根据章节id查询")
+    @GetMapping("getChapterInfo/{chapterId}")
+    public R getChapterInfo(@PathVariable String chapterId) {
+        EduChapter eduChapter = chapterService.getById(chapterId);
+        return R.ok().data("chapter",eduChapter);
+    }
+
+    @ApiOperation(value = "修改章节")
+    @PostMapping("updateChapter")
+    public R updateChapter(@RequestBody EduChapter eduChapter){
+        chapterService.updateById(eduChapter);
+        return R.ok();
+    }
+
+    @ApiOperation(value = "删除章节")
+    @DeleteMapping("deleteChapter/{chapterId}")
+    public R deleteChapter(@PathVariable String chapterId){
+        boolean flag = chapterService.deleteChapter(chapterId);
+        if (flag){
+            return R.ok();
+        }else {
+            return R.error();
+        }
+    }
+
 
 
 }
