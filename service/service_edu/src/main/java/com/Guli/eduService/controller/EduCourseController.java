@@ -2,6 +2,7 @@ package com.Guli.eduService.controller;
 
 
 import com.Guli.eduService.entity.VO.CourseInfoVo;
+import com.Guli.eduService.entity.VO.CoursePublishVo;
 import com.Guli.eduService.service.EduCourseService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,14 @@ public class EduCourseController {
         courseService.updateCourseInfo(courseInfoVo);
         return R.ok();
     }
+
+    @ApiOperation(value = "根据课程id查询课程确认信息")
+    @GetMapping("getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id) {
+        CoursePublishVo coursePublishVo = courseService.publishCourseInfo(id);
+        return R.ok().data("publishCourse",coursePublishVo);
+    }
+
 
 
 }

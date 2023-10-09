@@ -1,6 +1,7 @@
 package com.Guli.eduService.mapper;
 
 import com.Guli.eduService.entity.EduCourse;
+import com.Guli.eduService.entity.VO.CoursePublishVo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2023-10-05
  */
 public interface EduCourseMapper extends BaseMapper<EduCourse> {
+    public CoursePublishVo getPublicCourseInfo(String courseId);
 
 }
