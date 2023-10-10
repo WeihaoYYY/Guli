@@ -3,6 +3,7 @@ package com.Guli.eduService.service.impl;
 import com.Guli.eduService.entity.EduVideo;
 import com.Guli.eduService.mapper.EduVideoMapper;
 import com.Guli.eduService.service.EduVideoService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> implements EduVideoService {
+
+    public void removeVideoByCourseId(String courseId) {
+        QueryWrapper<EduVideo> wrapperVideo = new QueryWrapper<>();
+        wrapperVideo.eq("course_id", courseId);
+        baseMapper.delete(wrapperVideo);
+    }
 
 }

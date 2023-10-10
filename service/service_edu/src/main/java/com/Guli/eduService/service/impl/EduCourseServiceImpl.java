@@ -4,10 +4,14 @@ import com.Guli.eduService.entity.EduCourse;
 import com.Guli.eduService.entity.EduCourseDescription;
 import com.Guli.eduService.entity.VO.CourseInfoVo;
 import com.Guli.eduService.entity.VO.CoursePublishVo;
+import com.Guli.eduService.entity.VO.CourseQuery;
 import com.Guli.eduService.mapper.EduCourseMapper;
 import com.Guli.eduService.service.EduCourseDescriptionService;
 import com.Guli.eduService.service.EduCourseService;
 import com.Guli.serviceBase.exceptionHandler.GuliException;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseDescriptionService descService;
+
+    @Autowired
+    private EduVideoServiceImpl videoService;
+
+    @Autowired
+    private EduChapterServiceImpl chapterService;
+
 
     @Override
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
@@ -81,13 +92,56 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         descService.updateById(description);
     }
 
+    //根据课程id查询课程确认信息
     @Override
-    public CoursePublishVo publishCourseInfo(String id) {
-        CoursePublishVo publicCourseInfo = baseMapper.getPublicCourseInfo(id);
-        return publicCourseInfo;
+    public CoursePublishVo getPublishCourseInfo(String courseId) {
+        return baseMapper.getPublishCourseInfo(courseId);
     }
 
+    @Override
+    public void removeCourse(String courseId) {
+        //1 根据课程id删除小节
+        videoService.removeVideoByCourseId(courseId);
 
+        //2 根据课程id删除章节
+        chapterService.removeChapterByCourseId(courseId);
+
+        //3 根据课程id删除描述
+        descService.removeById(courseId);
+
+        //4 根据课程id删除课程本身
+        int result = baseMapper.deleteById(courseId);
+        if (result == 0){
+            throw new GuliException(20001,"删除失败");
+        }
+    }
+
+    @Override
+    public void pageQuery(Page<EduCourse> pageParam, CourseQuery courseQuery) {
+        QueryWrapper<EduCourse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("gmt_create");
+        if (courseQuery == null) {
+            baseMapper.selectPage(pageParam, queryWrapper);
+            return;
+        }
+            String title = courseQuery.getTitle();
+            String teacherId = courseQuery.getTeacherId();
+            String subjectParentId = courseQuery.getSubjectParentId();
+            String subjectId = courseQuery.getSubjectId();
+            if (!StringUtils.isEmpty(title)) {
+                queryWrapper.like("title", title);
+            }
+            if (!StringUtils.isEmpty(teacherId) ) {
+                queryWrapper.eq("teacher_id", teacherId);
+            }
+            if (!StringUtils.isEmpty(subjectParentId)) {
+                queryWrapper.ge("subject_parent_id", subjectParentId);
+            }
+            if (!StringUtils.isEmpty(subjectId)) {
+                queryWrapper.ge("subject_id", subjectId);
+            }
+            baseMapper.selectPage(pageParam, queryWrapper);
+    }
 
 
 }
